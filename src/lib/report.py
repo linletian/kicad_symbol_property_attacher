@@ -7,7 +7,8 @@ from __future__ import annotations
 
 import dataclasses as _dc
 import pathlib as _pl
-from typing import Iterable
+from typing import Iterable, Optional
+import datetime as _dt
 
 
 @_dc.dataclass
@@ -20,18 +21,25 @@ def write_markdown_report(
     report_path: _pl.Path,
     input_path: str,
     output_path: str,
-    stats,
+    stats: Optional[object],
     errors: Iterable[str],
     warnings: Iterable[str],
 ) -> None:
     lines: list[str] = []
+    ts = _dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     lines.append(f"# Attachment Report\n")
     lines.append(f"**Input**: `{input_path}`  ")
     lines.append(f"**Output**: `{output_path}`\n")
+    lines.append(f"**Timestamp**: `{ts}`\n")
     lines.append("\n## Summary\n")
-    lines.append(f"- Processed: **{stats.symbols_processed}**")
-    lines.append(f"- Added: **{stats.properties_added}**")
-    lines.append(f"- Skipped: **{stats.properties_skipped}**\n")
+    if stats is not None:
+        lines.append(f"- Processed: **{getattr(stats, 'symbols_processed', 0)}**")
+        lines.append(f"- Added: **{getattr(stats, 'properties_added', 0)}**")
+        lines.append(f"- Skipped: **{getattr(stats, 'properties_skipped', 0)}**\n")
+    else:
+        lines.append("- Processed: **0**")
+        lines.append("- Added: **0**")
+        lines.append("- Skipped: **0**\n")
 
     lines.append("## Errors\n")
     if errors:
@@ -48,7 +56,7 @@ def write_markdown_report(
         lines.append("- None\n")
 
     lines.append("## Skipped Symbols (already had property)\n")
-    if stats.skipped_symbols:
+    if stats is not None and getattr(stats, 'skipped_symbols', None):
         for name in stats.skipped_symbols:
             lines.append(f"- `{name}`")
     else:

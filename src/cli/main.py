@@ -16,7 +16,7 @@ from typing import Optional
 import click
 
 from ..lib.attacher import attach_property_to_file
-from ..lib.report import ReportOptions
+from ..lib.report import ReportOptions, write_markdown_report
 
 
 @click.group()
@@ -75,6 +75,19 @@ def attach(
             report_options=ropts,
         )
     except Exception as exc:  # noqa: BLE001
+        # Failure path should still generate a report per SC-005
+        try:
+            write_markdown_report(
+                report_path=ropts.report_path,
+                input_path=str(input_path),
+                output_path=str(output_path or input_path),
+                stats=None,
+                errors=[str(exc)],
+                warnings=[],
+            )
+        except Exception:
+            # If report generation itself fails, continue to exit
+            pass
         click.echo(f"Error: {exc}", err=True)
         sys.exit(2)
 
