@@ -5,6 +5,10 @@
 **Status**: Draft  
 **Input**: User description: "Design a program to batch-add a specified Property to all Symbols in KiCAD v9.x `.kicad_sym` libraries (S-expression format). Ensure KiCAD v9.x reads the library without compatibility errors. Property name is provided via program argument. If a Symbol already has the same Property, do not overwrite existing data. Cross-platform for Windows, macOS (Intel & Apple silicon), and Linux."
 
+## Overview (Non-Technical Summary)
+
+This feature automates a repetitive, error-prone task: adding a specific data field (Property) to every component symbol definition inside a KiCAD library file. It saves time and reduces manual editing mistakes. The output remains compatible with KiCAD so users can open and use the updated library without issues. The tool runs on major desktop systems and produces a clear report summarizing what changed and what was skipped, while supporting a safe update workflow (choose output or in-place with backup).
+
 ## User Scenarios & Testing *(mandatory)*
 
 <!--
@@ -77,6 +81,20 @@ User chooses output location or in-place update with backup handling to prevent 
 - Read-only files or permission issues: Program MUST report error without partial writes.
 - KiCAD version variance: If v9.x minor versions differ in schema tolerance, program MUST adhere to documented schema and avoid vendor-specific extensions.
 
+## Scope
+
+In Scope:
+- Single-file processing for KiCAD v9.x `.kicad_sym` libraries
+- Adding one specified Property (name/value) to all Symbols that lack it
+- Preserving file validity and producing a Markdown summary report
+- Safe update workflows (new output path or in-place with backup)
+
+Out of Scope:
+- Editing KiCAD UI or project files beyond `.kicad_sym`
+- Recursive directory processing or batch multi-file orchestration
+- Schema changes beyond documented v9.x conventions
+
+
 ## Requirements *(mandatory)*
 
 <!--
@@ -125,6 +143,16 @@ Assumptions:
 - **SC-004**: CLI runs successfully on Windows, macOS (Intel & Apple silicon), and Linux with consistent output.
  - **SC-005**: Markdown report is generated for 100% of successful runs; on failure, a report is still produced summarizing partial progress and errors.
  - **SC-006**: Report highlights enable users to identify errors/warnings within 10 seconds (validated via usability check with standard-sized reports).
+
+## Requirement Traceability
+
+- FR-001, FR-002, FR-003, FR-004 → Tested via US1 unit/integration (`tests/unit/test_parser.py`, `tests/integration/test_cli_attach.py`) and report checks
+- FR-005 → US2 cross-platform tests (`tests/integration/test_cli_cross_platform.py`)
+- FR-006 → US3 backup/output tests (`tests/integration/test_backup.py`)
+- FR-007 → Error handling tests (invalid input, permissions) in US1 failure-path
+- FR-008 → Dry-run tests (`tests/integration/test_cli_attach.py`) ensuring no writes
+- FR-009 → Line-endings/formatting preservation checks under US2
+- FR-010, FR-011, FR-012, FR-013 → Report unit tests (`tests/unit/test_report.py`) and integration assertions
 
 ## Clarifications
 

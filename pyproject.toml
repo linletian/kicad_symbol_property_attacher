@@ -1,0 +1,33 @@
+[project]
+name = "kicad-symbol-property-attacher"
+version = "0.1.0"
+description = "CLI tool to batch-attach a property to KiCAD .kicad_sym symbols"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Letian Lin" }]
+license = { text = "Proprietary" }
+dependencies = [
+  "click==8.1.*",
+  "sexpdata==0.0.3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.*",
+  "pytest-cov==5.*",
+  "ruff==0.6.*",
+  "black==24.*",
+  "mypy==1.11.*",
+]
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+
