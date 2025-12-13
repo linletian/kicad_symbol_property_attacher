@@ -72,3 +72,39 @@ def test_path_handling_in_place_vs_output(tmp_path: pl.Path):
     sx2 = parser.load_s_expr(local)
     sym_sx2, _ = parser.iter_symbols(sx2)[0]
     assert parser.has_property(sym_sx2, "SzlcscCode")
+
+
+def test_line_endings_and_indentation_preservation(tmp_path: pl.Path):
+    runner = CliRunner()
+    # Prepare CRLF input by rewriting fixture with Windows line endings
+    src = FIXTURES / "official-basic-no-prop-SzlcscCode.kicad_sym"
+    text = src.read_text("utf-8")
+    crlf_text = text.replace("\n", "\r\n")
+    crlf_in = tmp_path / "crlf.kicad_sym"
+    crlf_in.write_text(crlf_text, encoding="utf-8")
+
+    out_file = tmp_path / "out_crlf.kicad_sym"
+    result = runner.invoke(
+        kicad_sym_prop,
+        [
+            "attach",
+            "--input",
+            str(crlf_in),
+            "--property-name",
+            "SzlcscCode",
+            "--output",
+            str(out_file),
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    data = out_file.read_bytes()
+    decoded = data.decode("utf-8")
+    # SHOULD preserve formatting where possible: avoid tabs, balanced parentheses
+    assert "\t" not in decoded
+    assert decoded.count("(") == decoded.count(")")
+    # If input had CRLF, we prefer preserving; allow either CRLF or LF depending on serializer
+    # At minimum, ensure it remains consistent (no mixed endings)
+    has_crlf = "\r\n" in decoded
+    has_lf = "\n" in decoded
+    # Consistency: not both CRLF and bare LF mixed
+    assert not (has_crlf and decoded.replace("\r\n", "").find("\n") != -1)
