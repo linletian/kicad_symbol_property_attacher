@@ -1,50 +1,107 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: (none) → 1.0.0
+- Modified principles: Template placeholders → Concrete Python project governance
+- Added sections: Dependencies & Hardware Guidance integrated within principles
+- Removed sections: None
+- Templates requiring updates:
+  ✅ .specify/templates/plan-template.md (Constitution Check aligns conceptually; no changes required)
+  ✅ .specify/templates/spec-template.md (No conflicting constraints detected)
+  ✅ .specify/templates/tasks-template.md (Task grouping remains compatible)
+  ⚠ Pending: Repository README.md, CHANGELOG.md, PLAN docs—must follow Governance update on each commit
+- Deferred TODOs:
+  - TODO(RATIFICATION_DATE): Original adoption date not known; set once confirmed
+-->
+
+# Kicad Symbol Property Attacher Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Code Quality First (NON-NEGOTIABLE)
+All Python source MUST meet strict quality standards:
+- Linting: Enforce `flake8`/`ruff` with zero errors before merge.
+- Formatting: Use `black` with repository-wide configuration.
+- Type safety: Apply `mypy` with `strict` where feasible; public APIs MUST be typed.
+- Structure: Keep modules small, cohesive, and single-responsibility.
+- Performance: Avoid premature optimization; profile hotspots before changes.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Rationale: High code quality reduces defects, eases maintenance, and improves
+collaboration across contributors.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Complete English Documentation in Code
+All functions, methods, classes, and modules MUST have complete English docstrings
+and comments that explain intent, inputs, outputs, side effects, and error cases.
+- Docstrings: Follow Google or NumPy style consistently; include examples where apt.
+- Annotations: Every parameter and return value SHOULD have type hints.
+- Comments: Explain non-obvious logic; avoid redundant or outdated comments.
+- API docs: Auto-generate from docstrings when publishing releases.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Rationale: Clear, English documentation enables global collaboration and ensures
+the codebase remains accessible and maintainable.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Test Standards and Discipline
+Testing is mandatory and layered:
+- Unit tests: Cover core logic with `pytest`; target ≥85% coverage on critical paths.
+- Integration tests: Validate CLI flows and file I/O behaviors.
+- Hardware-adjustment tests: Include configuration validation and simulated run checks.
+- Test-first: Write failing tests before implementing significant features.
+- CI gates: All tests MUST pass in CI; flaky tests are prohibited.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Rationale: Reliable tests provide safety for refactoring and accelerate confident releases.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Hardware Adjustment Guidance
+Provide a detailed, versioned guidance document under `docs/hardware-adjustment.md`:
+- Environment setup: OS, drivers, required tools, calibration procedures.
+- Step-by-step adjustments: Parameters, expected ranges, and verification steps.
+- Safety notes: Explicit warnings for operations that can damage hardware.
+- Traceability: Link guidance steps to code/config versions and test cases.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Rationale: Hardware-related changes require precise instructions to ensure reproducibility
+and safe operation across environments.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Release Documentation & Git Hygiene
+Before each commit to `main` or a release branch:
+- Update `README.md`, `CHANGELOG.md`, and plan/spec/task docs with any behavior changes.
+- Tagging: Create annotated git tags for releases (`vMAJOR.MINOR.PATCH`).
+- SemVer: Respect semantic versioning for public CLI/API changes.
+- Commit messages: Use conventional commits; reference related docs and tests.
+
+Rationale: Up-to-date documentation and disciplined versioning improve user trust and
+developer productivity.
+
+### VI. Dependencies Policy (LTS First)
+Third-party components MUST prioritize LTS versions; if unavailable, use the latest stable.
+- Document all dependencies with exact versions in `requirements.txt` / `pyproject.toml`.
+- Maintain `docs/dependencies.md` listing components and versions, with upgrade notes.
+- Security: Monitor advisories; patch vulnerable dependencies promptly.
+- Reproducibility: Use lock files (`pip-tools`/`uv`) to pin transitive versions.
+
+Rationale: Stable dependencies reduce integration risk and improve reproducibility.
+
+## Additional Constraints
+
+Security, Performance, and CLI Standards:
+- Security: Validate inputs, sanitize file paths, avoid unsafe eval/exec.
+- Performance: Document expected scales; profile before optimizing; cache where justified.
+- CLI: Provide consistent text I/O; errors to stderr; support JSON and human-readable outputs.
+
+## Development Workflow
+
+Quality Gates and Reviews:
+- Pull Requests MUST pass lint, format, type-check, and full test suite.
+- Reviews verify adherence to principles and documentation completeness.
+- Any hardware-impacting change MUST update `docs/hardware-adjustment.md` and related tests.
+- Constitution compliance is a required review checklist item.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This Constitution supersedes other practices. Amendments require:
+- Documentation of proposed changes with rationale and impact assessment.
+- Version bump per semantic rules; migration plan for breaking changes.
+- Compliance review added to PRs; CI checks updated if gates change.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+All PRs and reviews MUST verify compliance with these principles. Complexity MUST be
+justified in writing. Refer to runtime guidance documents (README, quickstart, hardware
+guidance) during development.
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-13 | **Last Amended**: 2025-12-13
