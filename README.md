@@ -29,7 +29,46 @@ kicad-sym-prop attach -i path/to/lib.kicad_sym -n SzlcscCode --in-place --backup
 kicad-sym-prop attach -i path/to/lib.kicad_sym -n SzlcscCode --dry-run --report path/to/lib.kicad_sym.report.md
 ```
 
+## Report Example
+```markdown
+# Attachment Report
+**Input**: `tests/fixtures/kicad_v9/official-basic-no-prop-SzlcscCode.kicad_sym`  
+**Output**: `out/basic-added.kicad_sym`
+**Timestamp**: `2025-12-13 10:08:42`
+
+## Summary
+- Processed: **117**
+- Added: **116**
+- Skipped: **1**
+
+## Errors
+- None
+
+## Warnings
+- None
+
+## Skipped Symbols (already had property)
+- `X1224WRS-02-LPV01`
+```
+
+## Failure Path Example
+When input is invalid S-expression or no write permission, the CLI returns non-zero and still writes a Markdown report:
+```text
+Error: Failed to parse S-expression: unexpected token near line 42
+```
+The report will contain the errors list and zero stats.
+
 ## Notes
 - KiCAD v9.x should load outputs without warnings/errors.
 - Encoding: UTF-8. Line endings preserved consistently.
 - See `specs/001-kicad-symbol-property/` for full spec, plan, tasks.
+
+## Release
+- Current: `v0.1.0` — US1/US2/US3 complete; quality gates (ruff, black, mypy, pytest) green on macOS
+- Changelog: see `CHANGELOG.md`
+
+## Dependencies
+See `docs/dependencies.md` for pinned versions and LTS notes.
+
+## Hardware Adjustment
+N/A (software-only). See `docs/hardware-adjustment.md`.
