@@ -11,6 +11,7 @@ import pathlib as _pl
 from typing import Optional
 
 from . import parser
+from . import io as _io
 from .report import ReportOptions, write_markdown_report
 
 
@@ -51,12 +52,10 @@ def attach_property_to_file(
     if not dry_run:
         target = output_path or input_path
         if in_place and output_path is None:
-            backup = input_path.with_suffix(input_path.suffix + backup_suffix)
-            if input_path.exists():
-                input_path.replace(backup)
+            _io.make_backup(input_path, backup_suffix)
             target = input_path
         text = parser.dump_s_expr(lib)
-        target.write_text(text, encoding=encoding)
+        _io.write_text(target, text, encoding=encoding)
 
     # Report
     if report_options is not None:
