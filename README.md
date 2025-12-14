@@ -1,6 +1,6 @@
 # KiCAD Symbol Property Batch Attacher
 
-![CI](https://github.com/your-org-or-user/kicad_symbol_property_attacher/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/linletian/kicad_symbol_property_attacher/actions/workflows/ci.yml/badge.svg)
 
 A CLI tool to batch-add a specified Property to all Symbols in KiCAD v9.x `.kicad_sym` libraries while preserving S-expression validity. Cross-platform, with Markdown reports and safe update workflows.
 

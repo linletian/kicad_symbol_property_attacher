@@ -1,6 +1,6 @@
 # KiCAD 符号属性批量附加工具
 
-![CI](https://github.com/your-org-or-user/kicad_symbol_property_attacher/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/linletian/kicad_symbol_property_attacher/actions/workflows/ci.yml/badge.svg)
 
 一个用于在 KiCAD v9.x `.kicad_sym` 库中，为所有 Symbol 批量添加指定 Property 的命令行工具；保持 S 表达式有效性与格式；跨平台，支持生成 Markdown 报告以及安全更新工作流。
 
