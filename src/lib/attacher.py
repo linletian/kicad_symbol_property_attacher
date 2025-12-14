@@ -85,7 +85,7 @@ def attach_property_to_file(
     return stats
 
 
-def _insert_properties_textual_multi(
+def _insert_properties_textual_multi(  # noqa: PLR0915
     *,
     original_text: str,
     additions: list[tuple[str, str, str]],  # (symbol_name, prop_name, prop_value)

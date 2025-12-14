@@ -9,7 +9,7 @@ import dataclasses as _dc
 import datetime as _dt
 import pathlib as _pl
 from collections.abc import Iterable
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .attacher import AttachStats
 
@@ -24,7 +24,7 @@ def write_markdown_report(
     report_path: _pl.Path,
     input_path: str,
     output_path: str,
-    stats: Optional[AttachStats],
+    stats: AttachStats | None,
     errors: Iterable[str],
     warnings: Iterable[str],
 ) -> None:

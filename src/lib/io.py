@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import pathlib as pl
 import shutil
-from typing import Optional
 
 
 def read_text(path: pl.Path, encoding: str = "utf-8") -> str:
