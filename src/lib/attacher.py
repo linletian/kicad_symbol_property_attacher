@@ -99,7 +99,7 @@ def _insert_properties_textual_multi(  # noqa: PLR0915
     """
 
     def find_all_symbol_starts(text: str, name: str) -> list[int]:
-        pattern = f"(symbol \"{name}\""
+        pattern = f'(symbol "{name}"'
         starts: list[int] = []
         pos = 0
         while True:
@@ -175,7 +175,7 @@ def _insert_properties_textual_multi(  # noqa: PLR0915
             ind3 = ind2 + "  "
             ind4 = ind3 + "  "
             block = (
-                f"{indent}(property \"{prop_name}\" \"{prop_value}\"{newline}"
+                f'{indent}(property "{prop_name}" "{prop_value}"{newline}'
                 f"{ind2}(at 0 0 0){newline}"
                 f"{ind2}(effects{newline}"
                 f"{ind3}(font{newline}"

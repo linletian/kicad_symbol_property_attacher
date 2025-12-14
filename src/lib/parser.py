@@ -40,11 +40,7 @@ def iter_symbols(library_sx: Any) -> list[tuple[Any, int]]:
 
 def symbol_name(symbol_sx: Any) -> str:
     """Get symbol name from `(symbol "Name" ...)`."""
-    if (
-        isinstance(symbol_sx, list)
-        and len(symbol_sx) >= 2
-        and isinstance(symbol_sx[1], str)
-    ):
+    if isinstance(symbol_sx, list) and len(symbol_sx) >= 2 and isinstance(symbol_sx[1], str):
         return symbol_sx[1]
     return ""
 
