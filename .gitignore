@@ -32,3 +32,6 @@ Thumbs.db
 # Project-specific
 coverage/
 reports/
+
+# Test fixtures (do not upload sample libraries/templates)
+tests/fixtures/
