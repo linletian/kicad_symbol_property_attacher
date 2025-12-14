@@ -13,19 +13,14 @@ import pathlib as _pl
 import sys
 
 import click
-from typing import TYPE_CHECKING
 
 # Support both "python -m src.cli.main" (package under src) and installed package imports
-if TYPE_CHECKING:
-    from ..lib import attacher as _attacher_type
-    from ..lib import report as _report_type
-else:
-    try:
-        from ..lib import attacher as _attacher
-        from ..lib import report as _report
-    except ImportError:
-        from lib import attacher as _attacher
-        from lib import report as _report
+try:
+    from ..lib import attacher as _attacher
+    from ..lib import report as _report
+except ImportError:
+    from lib import attacher as _attacher
+    from lib import report as _report
 
 # Bind names once to avoid mypy redefinition across conditional imports
 attach_property_to_file = _attacher.attach_property_to_file
