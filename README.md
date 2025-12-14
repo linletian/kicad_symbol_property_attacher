@@ -174,12 +174,15 @@ The report will contain the errors list and zero stats.
 - See `specs/001-kicad-symbol-property/` for full spec, plan, tasks.
 
 ## Release
-- Current: `v0.1.2` — Multi-property attach; default report generation when omitted; docs/spec updated; tests passing.
+- Current: `v0.1.3` — CLI entry fix; README EN/CN install notes (mirror + no-build-isolation); validation complete.
 - Previous: `v0.1.0` — US1/US2/US3 complete; quality gates (ruff, black, mypy, pytest) green on macOS
 - Changelog: see `CHANGELOG.md`
 
 ## Dependencies
 See `docs/dependencies.md` for pinned versions and LTS notes.
+
+## License
+GPL-3.0. See `LICENSE`.
 
 ## Hardware Adjustment
 N/A (software-only). See `docs/hardware-adjustment.md`.

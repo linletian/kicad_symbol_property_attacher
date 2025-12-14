@@ -174,12 +174,15 @@ Error: Failed to parse S-expression: unexpected token near line 42
 - 详见 `specs/001-kicad-symbol-property/` 获取完整规范与任务。
 
 ## 版本发布
-- 当前：`v0.1.2` — 支持多属性一次添加；省略 `--report` 默认生成报告；文档与规范已更新；测试通过。
+- 当前：`v0.1.3` — 修复 CLI 安装入口；更新中英文安装说明（镜像 + 关闭构建隔离）；验证完成。
 - 历史：`v0.1.0` — US1/US2/US3 完成；质量门（ruff、black、mypy、pytest）在 macOS 通过。
 - 变更记录：见 `CHANGELOG.md`。
 
 ## 依赖
 参见 `docs/dependencies.md` 获取版本钉住与 LTS 说明。
+
+## 许可协议
+GPL-3.0。详见 `LICENSE`。
 
 ## 硬件相关
 N/A（纯软件）；参见 `docs/hardware-adjustment.md`。
