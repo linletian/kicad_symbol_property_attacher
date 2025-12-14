@@ -11,6 +11,9 @@ dependencies = [
   "sexpdata==0.0.3",
 ]
 
+[project.scripts]
+"kicad-sym-prop" = "src.cli.main:main"
+
 [project.optional-dependencies]
 dev = [
   "pytest==8.*",

@@ -62,6 +62,18 @@ python3 -m src.cli.main attach \
 python3 -m pip uninstall -y click sexpdata
 ```
 
+## 安装为 CLI（可选）
+你可以安装本包并直接使用入口点提供的 `kicad-sym-prop` 命令：
+```bash
+# 在虚拟环境中
+pip install .
+kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
+
+# 或系统环境（注意全局影响）
+python3 -m pip install .
+kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
+```
+
 ## 用法
 ```bash
 # 显式输出到新文件

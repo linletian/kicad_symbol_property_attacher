@@ -61,6 +61,18 @@ python3 -m src.cli.main attach \
 python3 -m pip uninstall -y click sexpdata
 ```
 
+## Install as CLI (optional)
+You can install the package and use the `kicad-sym-prop` command provided by entry points:
+```bash
+# In venv
+pip install .
+kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
+
+# Or system env (beware global effects)
+python3 -m pip install .
+kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
+```
+
 ## Usage
 ```bash
 # Output to new file (explicit)
