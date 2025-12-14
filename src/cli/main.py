@@ -25,7 +25,7 @@ def kicad_sym_prop() -> None:
 
 @kicad_sym_prop.command("attach")
 @click.option("--input", "input_path", type=click.Path(path_type=_pl.Path), required=True)
-@click.option("--property-name", "prop_name", type=str, required=True)
+@click.option("--property-name", "prop_names", type=str, multiple=True, required=True)
 @click.option("--property-value", "prop_value", type=str, default="")
 @click.option("--output", "output_path", type=click.Path(path_type=_pl.Path), default=None)
 @click.option("--in-place", "in_place", is_flag=True, default=False)
@@ -35,7 +35,7 @@ def kicad_sym_prop() -> None:
 @click.option("--encoding", "encoding", type=str, default="utf-8")
 def attach(
     input_path: _pl.Path,
-    prop_name: str,
+    prop_names: tuple[str, ...],
     prop_value: str,
     output_path: _pl.Path | None,
     in_place: bool,
@@ -68,7 +68,7 @@ def attach(
             output_path=output_path,
             in_place=True,  # 始终按新规范备份输入原始文件并写出到输出（默认同输入）
             backup_suffix=backup_suffix,
-            prop_name=prop_name,
+            prop_names=list(prop_names),
             prop_value=prop_value,
             dry_run=dry_run,
             encoding=encoding,

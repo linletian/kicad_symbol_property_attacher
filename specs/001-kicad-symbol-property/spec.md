@@ -28,9 +28,9 @@ This feature automates a repetitive, error-prone task: adding a specific data fi
   - Demonstrated to users independently
 -->
 
-### User Story 1 - Batch Attach Property via CLI (Priority: P1)
+### User Story 1 - Batch Attach Properties via CLI (Priority: P1)
 
-User executes the CLI to add a specified property name and value to all Symbols in a `.kicad_sym` file, ensuring no overwrite of existing identical property names and preserving S-expression validity.
+User executes the CLI to add one or more specified property names (repeatable) and a single optional value (defaults to empty) to all Symbols in a `.kicad_sym` file, ensuring no overwrite of existing identical property names and preserving S-expression validity.
 
 **Why this priority**: Delivers the core value—eliminates repetitive UI work by batch automation.
 
@@ -38,7 +38,7 @@ User executes the CLI to add a specified property name and value to all Symbols 
 
 **Acceptance Scenarios**:
 
-1. **Given** a `.kicad_sym` file without the target property, **When** run CLI with `--property-name` and `--property-value`, **Then** all Symbols include the new property with provided value.
+1. **Given** a `.kicad_sym` file without the target properties, **When** run CLI with repeatable `--property-name` and optional `--property-value`, **Then** all Symbols include the new properties with provided value (or empty if omitted).
 2. **Given** a `.kicad_sym` file where some Symbols already have the target property, **When** run CLI with same property name, **Then** existing property entries remain unchanged; only missing Symbols receive new property.
 3. **Given** any input file, **When** processing completes, **Then** the resulting file is a valid S-expression that KiCAD v9.x can load without warnings/errors.
 4. **Given** processing completes, **When** the program exits, **Then** it produces a Markdown report containing: execution summary (symbols processed, added, skipped), error/warning list, and a list of Symbols skipped due to existing property; errors/warnings are highlighted for quick review.
@@ -109,7 +109,7 @@ Out of Scope:
 ### Functional Requirements
 
 - **FR-001**: System MUST parse `.kicad_sym` files as S-expressions without losing structure or comments.
-- **FR-002**: System MUST accept CLI arguments for `--property-name` and `--property-value` (value optional; default empty string allowed).
+- **FR-002**: System MUST accept repeatable CLI arguments for `--property-name` (multiple properties in one run) and an optional `--property-value` (applies to all provided property names; default empty string allowed).
 - **FR-003**: System MUST add the specified property to every `Symbol` that lacks it; MUST NOT overwrite existing property entries of the same name; if a property of the same name exists with a different value, skip modification and do not add a duplicate entry.
 - **FR-004**: System MUST produce output that KiCAD v9.x can load without compatibility errors or warnings.
 - **FR-005**: System MUST support cross-platform execution on Windows, macOS (Intel & Apple silicon), and Linux.

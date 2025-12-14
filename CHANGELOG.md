@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2025-12-14
+### Added
+- Multi-property attach: Support repeating `--property-name` to add multiple properties in one run; `--property-value` remains optional and applies to all provided names (default empty).
+
+### Changed
+- README updated with multi-property usage examples and clarified default report generation when `--report` is omitted.
+- Spec updated to reflect repeatable `--property-name` and optional `--property-value` behavior.
+
+### Tests
+- Unit and integration tests adjusted to cover multi-property and new defaults; full suite passing.
+
 ## [0.1.0] - 2025-12-13
 ### Added
 - Initial feature specification, plan, research, data model, contracts, quickstart

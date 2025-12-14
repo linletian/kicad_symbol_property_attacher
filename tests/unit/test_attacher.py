@@ -10,7 +10,7 @@ def test_attach_dry_run_basic_adds_no_writes(tmp_path: pl.Path):
     # report path not used in this unit test
     stats = attach_property_to_file(
         input_path=path,
-        prop_name="SzlcscCode",
+        prop_names=["SzlcscCode"],
         prop_value="",
         output_path=None,
         in_place=False,
@@ -28,7 +28,7 @@ def test_attach_dry_run_mixed_skips(tmp_path: pl.Path):
     path = FIXTURES / "official-mixed-some-prop-SzlcscCode.kicad_sym"
     stats = attach_property_to_file(
         input_path=path,
-        prop_name="SzlcscCode",
+        prop_names=["SzlcscCode"],
         prop_value="",
         dry_run=True,
     )

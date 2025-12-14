@@ -23,6 +23,7 @@ pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.*
 kicad-sym-prop attach \
 	--input path/to/lib.kicad_sym \
 	--property-name SzlcscCode \
+	# --property-value is optional; defaults to empty string
 	--output path/to/lib.out.kicad_sym \
 	--report path/to/lib.out.report.md
 
@@ -38,6 +39,18 @@ kicad-sym-prop attach \
 	--input path/to/lib.kicad_sym \
 	--property-name SzlcscCode \
 	--dry-run \
+	--report path/to/lib.kicad_sym.report.md
+```
+
+### Multiple Properties
+You can add multiple properties in one run by repeating `--property-name`. The `--property-value` applies to all provided property names and is optional (default empty string).
+
+```bash
+kicad-sym-prop attach \
+	--input path/to/lib.kicad_sym \
+	--property-name SzlcscCode \
+	--property-name SzlcscPriceRef \
+	--property-name SzlcscLink \
 	--report path/to/lib.kicad_sym.report.md
 ```
 
@@ -89,6 +102,7 @@ The report will contain the errors list and zero stats.
 - KiCAD v9.x should load outputs without warnings/errors.
 - Encoding: UTF-8. Line endings preserved consistently.
 - When `--output` is omitted, output defaults to input path; an original backup is created next to input using incremental names (`.orig`, `.orig.1`, ...).
+- When `--report` is omitted, a timestamped Markdown report is generated next to the target file by default.
 - See `specs/001-kicad-symbol-property/` for full spec, plan, tasks.
 
 ## Release

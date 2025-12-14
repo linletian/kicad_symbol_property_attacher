@@ -25,7 +25,7 @@ class AttachStats:
 
 def attach_property_to_file(
     input_path: _pl.Path,
-    prop_name: str,
+    prop_names: list[str],
     prop_value: str,
     *,
     output_path: _pl.Path | None = None,
@@ -37,20 +37,24 @@ def attach_property_to_file(
 ) -> AttachStats:
     lib = parser.load_s_expr(input_path, encoding=encoding)
     stats = AttachStats()
-    to_add_names: list[str] = []
+    # Map symbol name -> list of property names to add
+    to_add: dict[str, list[str]] = {}
 
     for sym_sx, _idx in parser.iter_symbols(lib):
         stats.symbols_processed += 1
         name = parser.symbol_name(sym_sx)
-        if parser.has_property(sym_sx, prop_name):
-            stats.properties_skipped += 1
-            stats.skipped_symbols.append(name or "<unnamed>")
-            continue
-        parser.add_property(sym_sx, prop_name, prop_value)
-        stats.properties_added += 1
-        stats.added_symbols.append(name or "<unnamed>")
-        if name:
-            to_add_names.append(name)
+        props_to_add: list[str] = []
+        for pn in prop_names:
+            if parser.has_property(sym_sx, pn):
+                stats.properties_skipped += 1
+                stats.skipped_symbols.append(name or "<unnamed>")
+            else:
+                parser.add_property(sym_sx, pn, prop_value)
+                stats.properties_added += 1
+                stats.added_symbols.append(name or "<unnamed>")
+                props_to_add.append(pn)
+        if name and props_to_add:
+            to_add[name] = props_to_add
 
     # Write output if not dry-run
     if not dry_run:
@@ -60,11 +64,9 @@ def attach_property_to_file(
         target = output_path or input_path
         original = _io.read_text(input_path, encoding=encoding)
         newline = "\r\n" if "\r\n" in original else "\n"
-        updated = _insert_properties_textual(
+        updated = _insert_properties_textual_multi(
             original_text=original,
-            symbol_names=to_add_names,
-            prop_name=prop_name,
-            prop_value=prop_value,
+            additions=[(sn, pn, prop_value) for sn, pns in to_add.items() for pn in pns],
             newline=newline,
         )
         _io.write_text(target, updated, encoding=encoding)
@@ -83,18 +85,17 @@ def attach_property_to_file(
     return stats
 
 
-def _insert_properties_textual(
+def _insert_properties_textual_multi(
     *,
     original_text: str,
-    symbol_names: list[str],
-    prop_name: str,
-    prop_value: str,
+    additions: list[tuple[str, str, str]],  # (symbol_name, prop_name, prop_value)
     newline: str,
 ) -> str:
-    """Insert property lines into the original text by locating each `(symbol "Name" ...)` block
-    and adding a new line `(property "<prop_name>" "<prop_value>")` just before its closing parenthesis.
+    """Insert multiple property blocks into the original text.
 
-    This preserves the original formatting and only adds lines where needed.
+    Each addition is a tuple of (symbol_name, prop_name, prop_value). For each symbol occurrence,
+    append a full multi-line KiCAD-validated property block before the closing parenthesis.
+    Preserves formatting by deriving indentation from the block.
     """
 
     def find_all_symbol_starts(text: str, name: str) -> list[int]:
@@ -154,7 +155,7 @@ def _insert_properties_textual(
         return indent or "  "
 
     out = original_text
-    for name in symbol_names:
+    for name, prop_name, prop_value in additions:
         search_pos = 0
         while True:
             starts = find_all_symbol_starts(out[search_pos:], name)

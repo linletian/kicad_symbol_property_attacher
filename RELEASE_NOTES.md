@@ -5,3 +5,8 @@
 - Quality: ruff/black/mypy/pytest all green.
 - Docs: README, CHANGELOG, dependencies, hardware guidance.
 - Notes: Dependencies installed via mirror due to SSL; see CHANGELOG for details.
+## v0.1.2 (2025-12-14)
+- Feature: Multi-property attach via repeatable `--property-name`; `--property-value` optional (default empty) and applied to all provided names.
+- Behavior: When `--report` is omitted, a timestamped report is generated next to the target file; when `--output` is omitted, output writes back to input and creates a numbered original backup (`.orig`, `.orig.N`).
+- Docs: README usage updated (multi-property, default report), spec updated for repeatable names and optional value.
+- Quality: Tests updated and passing.
