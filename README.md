@@ -19,14 +19,41 @@ pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.*
 
 ## Usage
 ```bash
-# Output to new file
-kicad-sym-prop attach -i path/to/lib.kicad_sym -n SzlcscCode -o path/to/lib.out.kicad_sym --report path/to/lib.out.report.md
+# Output to new file (explicit)
+kicad-sym-prop attach \
+	--input path/to/lib.kicad_sym \
+	--property-name SzlcscCode \
+	--output path/to/lib.out.kicad_sym \
+	--report path/to/lib.out.report.md
 
-# In-place with backup
-kicad-sym-prop attach -i path/to/lib.kicad_sym -n SzlcscCode --in-place --backup-suffix .bak --report path/to/lib.kicad_sym.report.md
+# Default output: write back to input (no --output)
+# An original backup is created next to input using incremental naming: .orig, .orig.1, ...
+kicad-sym-prop attach \
+	--input path/to/lib.kicad_sym \
+	--property-name SzlcscCode \
+	--report path/to/lib.kicad_sym.report.md
 
-# Dry-run
-kicad-sym-prop attach -i path/to/lib.kicad_sym -n SzlcscCode --dry-run --report path/to/lib.kicad_sym.report.md
+# Dry-run (no writes, report still generated)
+kicad-sym-prop attach \
+	--input path/to/lib.kicad_sym \
+	--property-name SzlcscCode \
+	--dry-run \
+	--report path/to/lib.kicad_sym.report.md
+```
+
+### Property Block Format (KiCAD-validated)
+The tool inserts a full multi-line Property block compatible with KiCAD checks, preserving indentation and line endings:
+
+```text
+(property "SzlcscCode" ""
+	(at 0 0 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
 ```
 
 ## Report Example
@@ -61,6 +88,7 @@ The report will contain the errors list and zero stats.
 ## Notes
 - KiCAD v9.x should load outputs without warnings/errors.
 - Encoding: UTF-8. Line endings preserved consistently.
+- When `--output` is omitted, output defaults to input path; an original backup is created next to input using incremental names (`.orig`, `.orig.1`, ...).
 - See `specs/001-kicad-symbol-property/` for full spec, plan, tasks.
 
 ## Release

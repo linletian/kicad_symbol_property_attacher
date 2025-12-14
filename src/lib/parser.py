@@ -9,7 +9,7 @@ to locate `symbol` and `property` forms.
 from __future__ import annotations
 
 import pathlib as _pl
-from typing import Any, List, Tuple
+from typing import Any, cast
 
 import sexpdata
 
@@ -21,17 +21,17 @@ def load_s_expr(path: _pl.Path, encoding: str = "utf-8") -> Any:
 
 
 def dump_s_expr(sx: Any) -> str:
-    return sexpdata.dumps(sx)
+    return cast(str, sexpdata.dumps(sx))
 
 
-def iter_symbols(library_sx: Any) -> List[Tuple[Any, int]]:
+def iter_symbols(library_sx: Any) -> list[tuple[Any, int]]:
     """Return list of (symbol_sx, index) for all `(symbol ...)` forms in library.
 
     The library root is expected as `(kicad_symbol_lib ... (symbol ...) ...)`.
     """
     if not isinstance(library_sx, list) or not library_sx:
         return []
-    out: List[Tuple[Any, int]] = []
+    out: list[tuple[Any, int]] = []
     for i, node in enumerate(library_sx):
         if isinstance(node, list) and node and node[0] == sexpdata.Symbol("symbol"):
             out.append((node, i))
@@ -40,18 +40,26 @@ def iter_symbols(library_sx: Any) -> List[Tuple[Any, int]]:
 
 def symbol_name(symbol_sx: Any) -> str:
     """Get symbol name from `(symbol "Name" ...)`."""
-    if isinstance(symbol_sx, list) and len(symbol_sx) >= 2:
-        name = symbol_sx[1]
-        if isinstance(name, str):
-            return name
+    if (
+        isinstance(symbol_sx, list)
+        and len(symbol_sx) >= 2
+        and isinstance(symbol_sx[1], str)
+    ):
+        return symbol_sx[1]
     return ""
 
 
 def has_property(symbol_sx: Any, prop_name: str) -> bool:
     for node in symbol_sx:
-        if isinstance(node, list) and node and node[0] == sexpdata.Symbol("property"):
-            if len(node) >= 3 and isinstance(node[1], str) and node[1] == prop_name:
-                return True
+        if (
+            isinstance(node, list)
+            and node
+            and node[0] == sexpdata.Symbol("property")
+            and len(node) >= 3
+            and isinstance(node[1], str)
+            and node[1] == prop_name
+        ):
+            return True
     return False
 
 

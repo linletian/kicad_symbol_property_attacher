@@ -23,9 +23,9 @@ description: "Tasks for KiCAD Symbol Property Batch Attacher"
 **Purpose**: Project initialization and basic structure
 
 - [ ] T001 Create Python 3.11 virtual env and base deps in `.venv/`
-- [ ] T002 [P] Add `pyproject.toml` with pinned deps (click, sexpdata, pytest, ruff, black, mypy)
-- [ ] T003 [P] Add quality configs `ruff.toml`, `mypy.ini`, `.editorconfig` in repo root
-- [ ] T004 Initialize source layout per plan in `src/` and `tests/`
+- [X] T002 [P] Add `pyproject.toml` with pinned deps (click, sexpdata, pytest, ruff, black, mypy)
+- [X] T003 [P] Add quality configs `ruff.toml`, `mypy.ini`, `.editorconfig` in repo root
+- [X] T004 Initialize source layout per plan in `src/` and `tests/`
 
 ---
 
@@ -35,13 +35,13 @@ description: "Tasks for KiCAD Symbol Property Batch Attacher"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Configure `pytest` with coverage in `tests/`
+- [X] T005 Configure `pytest` with coverage in `tests/`
 - [ ] T006 [P] Add lint/format/type check tasks to CI (local scripts) `tools/` or `Makefile`
-- [ ] T007 Implement parser scaffold in `src/lib/parser.py`
-- [ ] T008 Implement report scaffold in `src/lib/report.py`
-- [ ] T009 Create CLI group/command in `src/cli/main.py`
-- [ ] T0IO1 [P] Implement `src/lib/io.py` for file read/write, backup creation, and permission error handling
-- [ ] T0IO2 [P] Unit tests for `io.py` in `tests/unit/test_io.py`: read/write, backup naming, permission errors
+- [X] T007 Implement parser scaffold in `src/lib/parser.py`
+- [X] T008 Implement report scaffold in `src/lib/report.py`
+- [X] T009 Create CLI group/command in `src/cli/main.py`
+- [X] T0IO1 [P] Implement `src/lib/io.py` for file read/write, backup creation, and permission error handling
+- [X] T0IO2 [P] Unit tests for `io.py` in `tests/unit/test_io.py`: read/write, backup naming, permission errors
 
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
@@ -56,24 +56,24 @@ description: "Tasks for KiCAD Symbol Property Batch Attacher"
 
 ### Tests for User Story 1
 
-- [ ] T010 [P] [US1] Unit test parser load/dump in `tests/unit/test_parser.py`
-- [ ] T011 [P] [US1] Unit test property detection/add in `tests/unit/test_attacher.py`
-- [ ] T012 [P] [US1] Unit test report contents/highlights in `tests/unit/test_report.py`
-- [ ] T013 [US1] Integration test CLI attach on `tests/fixtures/kicad_v9/official-basic-no-prop-SzlcscCode.kicad_sym` in `tests/integration/test_cli_attach.py`
-- [ ] T014 [US1] Integration test CLI attach on `tests/fixtures/kicad_v9/official-mixed-some-prop-SzlcscCode.kicad_sym` in `tests/integration/test_cli_attach.py`
-- [ ] T0DR1 [P] [US1] Dry-run integration test: assert no writes, correct stats/report in `tests/integration/test_cli_attach.py`
-- [ ] T0FAIL1 [US1] Invalid S-expression input: expect non-zero exit and Markdown report with highlighted errors
-- [ ] T0FAIL2 [US1] No write permission: assert no output file; Markdown report includes errors/warnings list
+- [X] T010 [P] [US1] Unit test parser load/dump in `tests/unit/test_parser.py`
+- [X] T011 [P] [US1] Unit test property detection/add in `tests/unit/test_attacher.py`
+- [X] T012 [P] [US1] Unit test report contents/highlights in `tests/unit/test_report.py`
+- [X] T013 [US1] Integration test CLI attach on `tests/fixtures/kicad_v9/official-basic-no-prop-SzlcscCode.kicad_sym` in `tests/integration/test_cli_attach.py`
+- [X] T014 [US1] Integration test CLI attach on `tests/fixtures/kicad_v9/official-mixed-some-prop-SzlcscCode.kicad_sym` in `tests/integration/test_cli_attach.py`
+- [X] T0DR1 [P] [US1] Dry-run integration test: assert no writes, correct stats/report in `tests/integration/test_cli_attach.py`
+- [X] T0FAIL1 [US1] Invalid S-expression input: expect non-zero exit and Markdown report with highlighted errors
+- [X] T0FAIL2 [US1] No write permission: assert no output file; Markdown report includes errors/warnings list
 
 ### Implementation for User Story 1
 
-- [ ] T015 [P] [US1] Implement `attach_property_to_file` in `src/lib/attacher.py`
-- [ ] T016 [P] [US1] Finalize parser functions (iterate symbols, has/add property) in `src/lib/parser.py`
-- [ ] T017 [US1] Implement CLI `attach` options and default report path in `src/cli/main.py`
-- [ ] T018 [US1] Implement Markdown report writer highlighting errors/warnings in `src/lib/report.py`
-- [ ] T019 [US1] Add logging/summary output in CLI (processed/added/skipped)
-- [ ] T0DR2 [US1] Add `--dry-run` option in `src/cli/main.py` and propagate to core logic
-- [ ] T0DR3 [US1] Implement dry-run in `src/lib/attacher.py`: compute stats and generate report without writing files or backups
+- [X] T015 [P] [US1] Implement `attach_property_to_file` in `src/lib/attacher.py`
+- [X] T016 [P] [US1] Finalize parser functions (iterate symbols, has/add property) in `src/lib/parser.py`
+- [X] T017 [US1] Implement CLI `attach` options and default report path in `src/cli/main.py`
+- [X] T018 [US1] Implement Markdown report writer highlighting errors/warnings in `src/lib/report.py`
+- [X] T019 [US1] Add logging/summary output in CLI (processed/added/skipped)
+- [X] T0DR2 [US1] Add `--dry-run` option in `src/cli/main.py` and propagate to core logic
+- [X] T0DR3 [US1] Implement dry-run in `src/lib/attacher.py`: compute stats and generate report without writing files or backups
 - Note: `attacher.py` should call `io.py` for actual I/O and backups to keep responsibilities focused.
 
 
@@ -89,12 +89,12 @@ description: "Tasks for KiCAD Symbol Property Batch Attacher"
 
 ### Tests for User Story 2
 
-- [ ] T020 [P] [US2] Encoding/line-endings tests in `tests/integration/test_cli_cross_platform.py`
-- [ ] T021 [P] [US2] Path handling tests (in-place vs output) in `tests/integration/test_cli_cross_platform.py`
+- [X] T020 [P] [US2] Encoding/line-endings tests in `tests/integration/test_cli_cross_platform.py`
+- [X] T021 [P] [US2] Path handling tests (in-place vs output) in `tests/integration/test_cli_cross_platform.py`
 
 ### Implementation for User Story 2
 
-- [ ] T022 [P] [US2] Ensure UTF-8 default; document platform notes in `README.md`
+- [X] T022 [P] [US2] Ensure UTF-8 default; document platform notes in `README.md`
 - [ ] T023 [US2] Validate identical output hashes for same inputs across platforms (doc-driven)
 
 **Checkpoint**: Cross-platform behavior validated
@@ -109,13 +109,13 @@ description: "Tasks for KiCAD Symbol Property Batch Attacher"
 
 ### Tests for User Story 3
 
-- [ ] T024 [P] [US3] In-place backup/restore test in `tests/integration/test_backup.py`
-- [ ] T025 [P] [US3] Output path behavior test in `tests/integration/test_backup.py`
+- [X] T024 [P] [US3] In-place backup/restore test in `tests/integration/test_backup.py`
+- [X] T025 [P] [US3] Output path behavior test in `tests/integration/test_backup.py`
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Implement safe in-place write with backup suffix in `src/lib/attacher.py`
-- [ ] T027 [US3] Validate mutual exclusion of `--output` and `--in-place` in `src/cli/main.py`
+- [X] T026 [P] [US3] Implement safe in-place write with backup suffix in `src/lib/attacher.py`
+- [X] T027 [US3] Validate mutual exclusion of `--output` and `--in-place` in `src/cli/main.py`
 
 **Checkpoint**: Safe update workflow complete
 
@@ -125,18 +125,19 @@ description: "Tasks for KiCAD Symbol Property Batch Attacher"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T028 [P] Documentation updates in `README.md`
+- [X] T028 [P] Documentation updates in `README.md`
 - [ ] T029 Add `CHANGELOG.md` entries and tag release `v0.1.0`
-- [ ] T030 [P] Add `docs/dependencies.md` with versions and notes
-- [ ] T031 [P] Add `docs/hardware-adjustment.md` section as N/A (software-only); link from README
+- [X] T030 [P] Add `docs/dependencies.md` with versions and notes
+- [X] T031 [P] Add `docs/hardware-adjustment.md` section as N/A (software-only); link from README
 - [ ] T032 Security hardening: input validation and error messages
 - [ ] T033 Performance pass on large files; note benchmarks in `research.md`
-- [ ] T0DR4 [P] Update `README.md` and `contracts/cli-contract.md` with dry-run usage and behavior
-- [ ] T0DOC1 [P] Update `README.md` with usage, dry-run, report examples, cross-platform notes
-- [ ] T0DOC2 Maintain `CHANGELOG.md` with release `v0.1.0` features and behavior notes
-- [ ] T0DOC3 [P] Add `docs/dependencies.md` with versions and LTS notes
-- [ ] T0DOC4 [P] Ensure `docs/hardware-adjustment.md` exists (N/A) and linked from README
+- [X] T0DR4 [P] Update `README.md` and `contracts/cli-contract.md` with dry-run usage and behavior
+- [X] T0DOC1 [P] Update `README.md` with usage, dry-run, report examples, cross-platform notes
+- [X] T0DOC2 Maintain `CHANGELOG.md` with release `v0.1.0` features and behavior notes
+- [X] T0DOC3 [P] Add `docs/dependencies.md` with versions and LTS notes
+- [X] T0DOC4 [P] Ensure `docs/hardware-adjustment.md` exists (N/A) and linked from README
 - [ ] T0REL1 Pre-release gate: lint/format/mypy/pytest all green; docs updated; create annotated git tag `v0.1.0`
+  - Status: ruff/black/mypy/pytest all green locally
 
 ---
 

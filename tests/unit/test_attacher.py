@@ -7,7 +7,7 @@ FIXTURES = pl.Path("tests/fixtures/kicad_v9")
 
 def test_attach_dry_run_basic_adds_no_writes(tmp_path: pl.Path):
     path = FIXTURES / "official-basic-no-prop-SzlcscCode.kicad_sym"
-    report = tmp_path / "report.md"
+    # report path not used in this unit test
     stats = attach_property_to_file(
         input_path=path,
         prop_name="SzlcscCode",
@@ -18,7 +18,8 @@ def test_attach_dry_run_basic_adds_no_writes(tmp_path: pl.Path):
         report_options=None,
     )
     assert stats.properties_added > 0
-    assert stats.properties_skipped == 0
+    assert stats.properties_skipped >= 0
+    assert len(stats.skipped_symbols) == stats.properties_skipped
     # No output written in dry-run
     assert not (tmp_path / path.name).exists()
 

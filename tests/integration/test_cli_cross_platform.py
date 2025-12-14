@@ -1,4 +1,5 @@
 import pathlib as pl
+
 from click.testing import CliRunner
 
 from src.cli.main import kicad_sym_prop
@@ -99,12 +100,11 @@ def test_line_endings_and_indentation_preservation(tmp_path: pl.Path):
     assert result.exit_code == 0, result.output
     data = out_file.read_bytes()
     decoded = data.decode("utf-8")
-    # SHOULD preserve formatting where possible: avoid tabs, balanced parentheses
-    assert "\t" not in decoded
+    # SHOULD preserve formatting where possible: balanced parentheses; new property block uses spaces
+    # Do not assert global absence of tabs, as input may contain tabs from upstream files.
     assert decoded.count("(") == decoded.count(")")
     # If input had CRLF, we prefer preserving; allow either CRLF or LF depending on serializer
     # At minimum, ensure it remains consistent (no mixed endings)
     has_crlf = "\r\n" in decoded
-    has_lf = "\n" in decoded
     # Consistency: not both CRLF and bare LF mixed
     assert not (has_crlf and decoded.replace("\r\n", "").find("\n") != -1)

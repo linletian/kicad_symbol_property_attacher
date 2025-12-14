@@ -1,4 +1,5 @@
 line-length = 120
 target-version = "py311"
-select = ["E","F","I","UP","B","SIM","PL"]
-ignore = ["E501"]
+[lint]
+select = ["E","F","I","PL","UP","SIM"]
+ignore = ["BLE001","PLR0913","PLR2004"]

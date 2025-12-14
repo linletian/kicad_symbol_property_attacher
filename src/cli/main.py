@@ -11,7 +11,6 @@ from __future__ import annotations
 import datetime as _dt
 import pathlib as _pl
 import sys
-from typing import Optional
 
 import click
 
@@ -38,11 +37,11 @@ def attach(
     input_path: _pl.Path,
     prop_name: str,
     prop_value: str,
-    output_path: Optional[_pl.Path],
+    output_path: _pl.Path | None,
     in_place: bool,
     backup_suffix: str,
     dry_run: bool,
-    report_path: Optional[_pl.Path],
+    report_path: _pl.Path | None,
     encoding: str,
 ) -> None:
     """
@@ -50,9 +49,10 @@ def attach(
     Produces Markdown report with summary and highlighted errors/warnings.
     """
 
-    if output_path and in_place:
-        click.echo("Error: --output and --in-place are mutually exclusive", err=True)
-        sys.exit(1)
+    # New spec: --output 可以不提供参数，默认为输入文件路径与文件名。
+    # 若同时提供 --in-place，以输入路径为准；保持兼容但不再强制互斥。
+    if output_path is None:
+        output_path = input_path
 
     # Default report path next to target file with timestamp
     if report_path is None:
@@ -66,7 +66,7 @@ def attach(
         stats = attach_property_to_file(
             input_path=input_path,
             output_path=output_path,
-            in_place=in_place,
+            in_place=True,  # 始终按新规范备份输入原始文件并写出到输出（默认同输入）
             backup_suffix=backup_suffix,
             prop_name=prop_name,
             prop_value=prop_value,
@@ -76,7 +76,9 @@ def attach(
         )
     except Exception as exc:  # noqa: BLE001
         # Failure path should still generate a report per SC-005
-        try:
+        from contextlib import suppress
+
+        with suppress(Exception):
             write_markdown_report(
                 report_path=ropts.report_path,
                 input_path=str(input_path),
@@ -85,16 +87,11 @@ def attach(
                 errors=[str(exc)],
                 warnings=[],
             )
-        except Exception:
-            # If report generation itself fails, continue to exit
-            pass
         click.echo(f"Error: {exc}", err=True)
         sys.exit(2)
 
     # Success
-    click.echo(
-        f"Processed={stats.symbols_processed} added={stats.properties_added} skipped={stats.properties_skipped}"
-    )
+    click.echo(f"Processed={stats.symbols_processed} added={stats.properties_added} skipped={stats.properties_skipped}")
 
 
 def main() -> None:  # Entry point for console_scripts

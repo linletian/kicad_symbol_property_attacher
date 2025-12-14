@@ -15,6 +15,12 @@ All notable changes to this project will be documented in this file.
  - In-place write with backup suffix, and mutual exclusion with `--output`
  - Markdown report listing skipped symbols and errors/warnings; default timestamped path
 
+### Changed
+- Output/backup workflow: When `--output` is omitted, default output is the input file itself; before saving, create a non-overwriting numbered original backup next to the input (`.orig`, `.orig.1`, ...).
+- Property insertion format: Insert a KiCAD-validated multi-line Property block containing `(at 0 0 0)` and `(effects (font (size 1.27 1.27)) (hide yes))`, preserving indentation and line endings.
+- CLI examples and docs: README usage switched to long options (`--input`, `--property-name`), updated examples for default output and incremental backups.
+- Spec updates: `specs/001-kicad-symbol-property/spec.md` reflects new default output, numbered backups, and multi-line property block requirements.
+
 ### Fixed
 - Governance/spec cleanup: removed template residue, merged duplicate FR-003, added non-technical overview/scope/traceability
 - Updated `ruff.toml` to new `[lint]` section; addressed lints and typing issues

@@ -1,4 +1,5 @@
 import pathlib as pl
+
 from click.testing import CliRunner
 
 from src.cli.main import kicad_sym_prop
@@ -62,7 +63,7 @@ def test_cli_attach_dry_run_no_write(tmp_path: pl.Path):
 def test_cli_attach_invalid_s_expr_generates_error_report(tmp_path: pl.Path):
     runner = CliRunner()
     bad = tmp_path / "bad.kicad_sym"
-    bad.write_text("(kicad_symbol_lib (symbol \"MissingParen\" ", encoding="utf-8")
+    bad.write_text('(kicad_symbol_lib (symbol "MissingParen" ', encoding="utf-8")
     report = tmp_path / "bad.report.md"
     result = runner.invoke(
         kicad_sym_prop,

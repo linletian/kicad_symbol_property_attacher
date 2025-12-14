@@ -7,7 +7,11 @@
 
 ## Overview (Non-Technical Summary)
 
-This feature automates a repetitive, error-prone task: adding a specific data field (Property) to every component symbol definition inside a KiCAD library file. It saves time and reduces manual editing mistakes. The output remains compatible with KiCAD so users can open and use the updated library without issues. The tool runs on major desktop systems and produces a clear report summarizing what changed and what was skipped, while supporting a safe update workflow (choose output or in-place with backup).
+This feature automates a repetitive, error-prone task: adding a specific data field (Property) to every component symbol definition inside a KiCAD library file. It saves time and reduces manual editing mistakes. The output remains compatible with KiCAD so users can open and use the updated library without issues. The tool runs on major desktop systems and produces a clear report summarizing what changed and what was skipped, while supporting a safe update workflow:
+
+- Default output is the input file itself when `--output` is omitted.
+- Before saving, the tool creates a non-overwriting, incrementally numbered original backup next to the input (e.g., `.orig`, `.orig.1`, `.orig.2`).
+- When `--output` is provided, the file is saved to the specified path/name.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -57,16 +61,16 @@ User runs the program on Windows, macOS (Intel & Apple silicon), and Linux with 
 
 ### User Story 3 - Safe Update Workflow (Priority: P3)
 
-User chooses output location or in-place update with backup handling to prevent data loss.
+User chooses output location; when `--output` is omitted, the tool writes back to the input file. The tool always creates an original backup next to the input using incrementally numbered filenames to prevent data loss.
 
 **Why this priority**: Protects user data and supports flexible workflows.
 
-**Independent Test**: Use `--output` to write to a new file or `--in-place` with automatic backup and verify correctness.
+**Independent Test**: Use `--output` to write to a new file or omit `--output` to write back to input; verify a numbered original backup is created next to the input without overwriting existing backups.
 
 **Acceptance Scenarios**:
 
 1. **Given** an input file and `--output out.kicad_sym`, **When** program runs, **Then** the input remains unchanged and output contains modifications.
-2. **Given** `--in-place` mode, **When** program runs, **Then** it creates a backup (e.g., `.bak`) before writing changes; restore possible.
+2. **Given** an input file and omitted `--output`, **When** program runs, **Then** it writes back to the input file and creates a numbered original backup next to the input (prefer `*.orig`, else `*.orig.N`).
 
 ---
 
@@ -109,10 +113,10 @@ Out of Scope:
 - **FR-003**: System MUST add the specified property to every `Symbol` that lacks it; MUST NOT overwrite existing property entries of the same name; if a property of the same name exists with a different value, skip modification and do not add a duplicate entry.
 - **FR-004**: System MUST produce output that KiCAD v9.x can load without compatibility errors or warnings.
 - **FR-005**: System MUST support cross-platform execution on Windows, macOS (Intel & Apple silicon), and Linux.
-- **FR-006**: System MUST provide `--output` for writing to a new file and `--in-place` safe update with automatic backup.
+- **FR-006**: System MUST provide `--output` for writing to a new file. When `--output` is omitted, System MUST default to saving to the input path; before saving, System MUST create a non-overwriting numbered original backup next to the input (e.g., `*.orig`, `*.orig.1`, ...).
 - **FR-007**: System MUST validate inputs and report errors clearly (invalid file, invalid S-expression, missing permissions).
 - **FR-008**: System SHOULD allow dry-run mode to preview changes (e.g., stats of added properties) without writing.
-- **FR-009**: System SHOULD preserve file formatting conventions where possible (line endings, indentation).
+- **FR-009**: System SHOULD preserve file formatting conventions where possible (line endings, indentation). Property insertion MUST use a multi-line block compatible with KiCAD validation, containing `(at 0 0 0)` and `(effects (font (size 1.27 1.27)) (hide yes))`, with indentation consistent with the surrounding block.
 - **FR-010**: System MUST log processing summary: symbols processed, properties added, properties skipped (existing), duration.
  - **FR-011**: System MUST generate a Markdown report file capturing the execution summary, explicit error list, explicit warning list, and the full list of skipped Symbols (already had the property).
  - **FR-012**: The Markdown report MUST visually highlight errors and warnings (e.g., headings, emphasis, or badges) to enable fast triage.
