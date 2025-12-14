@@ -13,19 +13,20 @@ import pathlib as _pl
 import sys
 
 import click
+import importlib
 
 # Support both "python -m src.cli.main" (package under src) and installed package imports
 try:
-    from ..lib import attacher as _attacher
-    from ..lib import report as _report
+    attacher = importlib.import_module("src.lib.attacher")
+    report = importlib.import_module("src.lib.report")
 except ImportError:
-    from lib import attacher as _attacher
-    from lib import report as _report
+    attacher = importlib.import_module("lib.attacher")
+    report = importlib.import_module("lib.report")
 
 # Bind names once to avoid mypy redefinition across conditional imports
-attach_property_to_file = _attacher.attach_property_to_file
-ReportOptions = _report.ReportOptions
-write_markdown_report = _report.write_markdown_report
+attach_property_to_file = attacher.attach_property_to_file
+ReportOptions = report.ReportOptions
+write_markdown_report = report.write_markdown_report
 
 
 @click.group()
