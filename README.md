@@ -11,13 +11,7 @@ A CLI tool to batch-add a specified Property to all Symbols in KiCAD v9.x `.kica
 - Dry-run preview with stats and report
 - Markdown report with highlighted errors/warnings and skipped symbols
 
-## Install (dev)
-```bash
-python3.11 -m venv .venv
-source .venv/bin/activate
-pip install -U pip
-pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.* black==24.* mypy==1.11.*
-```
+<!-- Developer setup moved below; README leads with user usage. -->
 
 ## Environments
 
@@ -86,6 +80,18 @@ Tip: if build isolation pulls dependencies from PyPI and fails due to SSL/cert r
 ```bash
 pip install --no-build-isolation .
 ```
+
+## Developer Setup (dev)
+For contributors who want to run tests and linters, install the full dev toolchain. End-users can skip this section.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.* black==24.* mypy==1.11.*
+```
+Notes:
+- Runtime deps: `click`, `sexpdata`
+- Dev deps: `pytest`, `pytest-cov`, `ruff`, `black`, `mypy`
 
 ## Usage
 ```bash

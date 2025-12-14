@@ -12,13 +12,7 @@
 - Markdown 报告含错误/警告高亮与跳过的 Symbol 列表
 - 支持一次添加多个属性（重复传入 `--property-name`），`--property-value` 可省略，默认空字符串并应用到所有属性名
 
-## 安装（开发环境示例）
-```bash
-python3.11 -m venv .venv
-source .venv/bin/activate
-pip install -U pip
-pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.* black==24.* mypy==1.11.*
-```
+<!-- 开发者安装说明已移动到文档后半部分；README 先面向用户使用。 -->
 
 ## 运行环境选择
 
@@ -91,6 +85,18 @@ kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
 ```bash
 pip install --no-build-isolation .
 ```
+
+## 开发者环境（dev）
+面向贡献者，用于本地开发、测试与代码质量检查。普通用户可跳过。
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.* black==24.* mypy==1.11.*
+```
+说明：
+- 运行时依赖：`click`, `sexpdata`
+- 开发依赖：`pytest`, `pytest-cov`, `ruff`, `black`, `mypy`
 
 ## 用法
 ```bash
