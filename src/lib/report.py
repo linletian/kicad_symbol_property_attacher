@@ -10,6 +10,7 @@ import datetime as _dt
 import pathlib as _pl
 from collections.abc import Iterable
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from .attacher import AttachStats
 
