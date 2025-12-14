@@ -9,11 +9,11 @@ Markdown report with highlighted errors/warnings and skipped Symbols.
 from __future__ import annotations
 
 import datetime as _dt
+import importlib
 import pathlib as _pl
 import sys
 
 import click
-import importlib
 
 # Support both "python -m src.cli.main" (package under src) and installed package imports
 try:
