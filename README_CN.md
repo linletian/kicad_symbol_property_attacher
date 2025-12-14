@@ -1,4 +1,4 @@
-# KiCAD 符号属性批量附加工具
+# KiCAD 符号属性批量附加工具 · [English](README.md)
 
 ![CI](https://github.com/linletian/kicad_symbol_property_attacher/actions/workflows/ci.yml/badge.svg)
 

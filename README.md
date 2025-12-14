@@ -1,4 +1,4 @@
-# KiCAD Symbol Property Batch Attacher
+# KiCAD Symbol Property Batch Attacher · [中文](README_CN.md)
 
 ![CI](https://github.com/linletian/kicad_symbol_property_attacher/actions/workflows/ci.yml/badge.svg)
 
