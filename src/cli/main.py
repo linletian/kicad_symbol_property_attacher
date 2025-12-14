@@ -16,11 +16,16 @@ import click
 
 # Support both "python -m src.cli.main" (package under src) and installed package imports
 try:
-    from ..lib.attacher import attach_property_to_file
-    from ..lib.report import ReportOptions, write_markdown_report
+    from ..lib import attacher as _attacher
+    from ..lib import report as _report
 except ImportError:
-    from lib.attacher import attach_property_to_file
-    from lib.report import ReportOptions, write_markdown_report
+    from lib import attacher as _attacher
+    from lib import report as _report
+
+# Bind names once to avoid mypy redefinition across conditional imports
+attach_property_to_file = _attacher.attach_property_to_file
+ReportOptions = _report.ReportOptions
+write_markdown_report = _report.write_markdown_report
 
 
 @click.group()
