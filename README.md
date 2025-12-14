@@ -106,7 +106,8 @@ The report will contain the errors list and zero stats.
 - See `specs/001-kicad-symbol-property/` for full spec, plan, tasks.
 
 ## Release
-- Current: `v0.1.0` — US1/US2/US3 complete; quality gates (ruff, black, mypy, pytest) green on macOS
+- Current: `v0.1.2` — Multi-property attach; default report generation when omitted; docs/spec updated; tests passing.
+- Previous: `v0.1.0` — US1/US2/US3 complete; quality gates (ruff, black, mypy, pytest) green on macOS
 - Changelog: see `CHANGELOG.md`
 
 ## Dependencies
