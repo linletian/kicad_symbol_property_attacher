@@ -1,0 +1,40 @@
+Run python -m ruff check .
+src/lib/attacher.py:88:5: PLR0915 Too many statements (59 > 50)
+   |
+88 | def _insert_properties_textual_multi(
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PLR0915
+89 |     *,
+90 |     original_text: str,
+   |
+
+src/lib/io.py:5:20: F401 [*] `typing.Optional` imported but unused
+  |
+3 | import pathlib as pl
+4 | import shutil
+5 | from typing import Optional
+  |                    ^^^^^^^^ F401
+  |
+  = help: Remove unused import: `typing.Optional`
+
+src/lib/report.py:6:1: I001 [*] Import block is un-sorted or un-formatted
+   |
+ 4 |   """
+ 5 |   
+ 6 | / from __future__ import annotations
+ 7 | | 
+ 8 | | import dataclasses as _dc
+ 9 | | import datetime as _dt
+10 | | import pathlib as _pl
+11 | | from collections.abc import Iterable
+12 | | from typing import Optional, TYPE_CHECKING
+13 | | if TYPE_CHECKING:
+   | |_^ I001
+14 |       from .attacher import AttachStats
+   |
+   = help: Organize imports
+
+src/lib/report.py:27:12: UP007 [*] Use `X | Y` for type annotations
+   |
+25 |     input_path: str,
+26 |     output_path: str,
+27 |     stats: Optional[AttachStats],

@@ -1,0 +1,21 @@
+Run python -m ruff check .
+src/lib/report.py:6:1: I001 [*] Import block is un-sorted or un-formatted
+   |
+ 4 |   """
+ 5 |   
+ 6 | / from __future__ import annotations
+ 7 | | 
+ 8 | | import dataclasses as _dc
+ 9 | | import datetime as _dt
+10 | | import pathlib as _pl
+11 | | from collections.abc import Iterable
+12 | | from typing import TYPE_CHECKING
+13 | | if TYPE_CHECKING:
+   | |_^ I001
+14 |       from .attacher import AttachStats
+   |
+   = help: Organize imports
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.
+Error: Process completed with exit code 1.
