@@ -33,5 +33,9 @@ Thumbs.db
 coverage/
 reports/
 
-# Test fixtures (do not upload sample libraries/templates)
-tests/fixtures/
+# Test fixtures
+# Keep fixtures tracked to allow CI to run integration tests.
+# If large/vendor data needs exclusion, use more specific patterns.
+
+# Temp files
+tmp/
