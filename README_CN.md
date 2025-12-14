@@ -74,6 +74,22 @@ python3 -m pip install .
 kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
 ```
 
+在中国大陆网络环境下，若默认 PyPI 不稳定，建议在安装阶段临时使用可信国内镜像（如清华 Tuna）：
+```bash
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+  --trusted-host pypi.tuna.tsinghua.edu.cn \
+  .
+```
+随后运行：
+```bash
+kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
+```
+
+提示：若构建隔离阶段因 SSL/证书限制拉取依赖失败，可在本地安装时关闭构建隔离：
+```bash
+pip install --no-build-isolation .
+```
+
 ## 用法
 ```bash
 # 显式输出到新文件

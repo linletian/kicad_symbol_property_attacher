@@ -26,9 +26,7 @@ pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.*
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -U pip
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
-	--trusted-host pypi.tuna.tsinghua.edu.cn \
-	click==8.1.7 sexpdata==0.0.3
+pip install click==8.1.7 sexpdata==0.0.3
 ```
 - Use:
 ```bash
@@ -46,9 +44,7 @@ rm -rf .venv
 - Pros: no venv needed. Cons: risk of global version conflicts; may require sudo.
 - Install:
 ```bash
-python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
-	--trusted-host pypi.tuna.tsinghua.edu.cn \
-	click==8.1.7 sexpdata==0.0.3
+python3 -m pip install click==8.1.7 sexpdata==0.0.3
 ```
 - Use:
 ```bash
@@ -71,6 +67,22 @@ kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
 # Or system env (beware global effects)
 python3 -m pip install .
 kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
+```
+
+Note for users in Mainland China: if network to default PyPI is unstable, consider using a trusted domestic mirror temporarily during installation (e.g. Tsinghua Tuna). Example in venv:
+```bash
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+	--trusted-host pypi.tuna.tsinghua.edu.cn \
+	.
+```
+Then run:
+```bash
+kicad-sym-prop attach --input path/to/lib.kicad_sym --property-name SzlcscCode
+```
+
+Tip: if build isolation pulls dependencies from PyPI and fails due to SSL/cert restrictions, you can disable isolation during local install:
+```bash
+pip install --no-build-isolation .
 ```
 
 ## Usage

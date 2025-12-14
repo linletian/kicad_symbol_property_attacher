@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-"kicad-sym-prop" = "src.cli.main:main"
+"kicad-sym-prop" = "cli.main:main"
 
 [project.optional-dependencies]
 dev = [
@@ -33,4 +33,7 @@ target-version = "py311"
 
 [tool.pytest.ini_options]
 addopts = "-q"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 

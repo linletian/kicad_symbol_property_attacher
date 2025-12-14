@@ -14,8 +14,13 @@ import sys
 
 import click
 
-from ..lib.attacher import attach_property_to_file
-from ..lib.report import ReportOptions, write_markdown_report
+# Support both "python -m src.cli.main" (package under src) and installed package imports
+try:
+    from ..lib.attacher import attach_property_to_file  # type: ignore
+    from ..lib.report import ReportOptions, write_markdown_report  # type: ignore
+except Exception:  # noqa: BLE001
+    from lib.attacher import attach_property_to_file  # type: ignore
+    from lib.report import ReportOptions, write_markdown_report  # type: ignore
 
 
 @click.group()

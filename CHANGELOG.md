@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2025-12-14
+### Fixed
+- CLI entry import: Adjusted packaging to discover packages under `src/` and updated console script to `cli.main:main`. `cli/main.py` now supports both source-run (`python -m src.cli.main`) and installed-run (`kicad-sym-prop`) by resilient imports.
+
+### Docs
+- README (EN): Added Mainland China mirror note and a tip to disable build isolation during local install when SSL/cert blocks dependencies.
+- README (CN): Added corresponding mirror note and `--no-build-isolation` tip.
+
+### Notes
+- Validation: Verified CLI via module run; CLI install/run validated after import fix.
+
 ## [0.1.2] - 2025-12-14
 ### Added
 - Multi-property attach: Support repeating `--property-name` to add multiple properties in one run; `--property-value` remains optional and applies to all provided names (default empty).

@@ -1,5 +1,10 @@
 # Release Notes
 
+## v0.1.3 (2025-12-14)
+- Fix: Console script import path corrected. Packaging configured to find packages under `src/`, and `cli/main.py` supports both source and installed imports.
+- Docs: EN/CN README updated with domestic mirror notes and `--no-build-isolation` tip to mitigate SSL/cert issues when installing locally.
+- Validation: CLI verified via module run; installation path validated after fix.
+
 ## v0.1.0 (2025-12-13)
 - Features: CLI attach, parser, attacher, report; dry-run; in-place with backup; cross-platform handling; Markdown reports.
 - Quality: ruff/black/mypy/pytest all green.
