@@ -17,6 +17,50 @@ pip install -U pip
 pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.* black==24.* mypy==1.11.*
 ```
 
+## Environments
+
+### Option A: Virtual Environment (recommended)
+- Pros: dependency isolation, reproducibility, no sudo, easy cleanup.
+- Install:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+	--trusted-host pypi.tuna.tsinghua.edu.cn \
+	click==8.1.7 sexpdata==0.0.3
+```
+- Use:
+```bash
+src/.venv/bin/python -m src.cli.main attach \
+	--input path/to/lib.kicad_sym \
+	--property-name SzlcscCode
+```
+- Uninstall (cleanup):
+```bash
+deactivate || true
+rm -rf .venv
+```
+
+### Option B: System Environment (alternative)
+- Pros: no venv needed. Cons: risk of global version conflicts; may require sudo.
+- Install:
+```bash
+python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+	--trusted-host pypi.tuna.tsinghua.edu.cn \
+	click==8.1.7 sexpdata==0.0.3
+```
+- Use:
+```bash
+python3 -m src.cli.main attach \
+	--input path/to/lib.kicad_sym \
+	--property-name SzlcscCode
+```
+- Uninstall (global):
+```bash
+python3 -m pip uninstall -y click sexpdata
+```
+
 ## Usage
 ```bash
 # Output to new file (explicit)

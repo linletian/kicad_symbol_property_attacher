@@ -18,6 +18,50 @@ pip install -U pip
 pip install click==8.1.* sexpdata==0.0.3 pytest==8.* pytest-cov==5.* ruff==0.6.* black==24.* mypy==1.11.*
 ```
 
+## 运行环境选择
+
+### 方案 A：虚拟环境（推荐）
+- 优势：依赖隔离、可重复性强、无需 sudo、易于清理。
+- 安装：
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+  --trusted-host pypi.tuna.tsinghua.edu.cn \
+  click==8.1.7 sexpdata==0.0.3
+```
+- 使用：
+```bash
+src/.venv/bin/python -m src.cli.main attach \
+  --input path/to/lib.kicad_sym \
+  --property-name SzlcscCode
+```
+- 卸载（清理）：
+```bash
+deactivate || true
+rm -rf .venv
+```
+
+### 方案 B：系统环境（备选）
+- 优势：不需要 venv；劣势：可能产生全局版本冲突，可能需要 sudo。
+- 安装：
+```bash
+python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+  --trusted-host pypi.tuna.tsinghua.edu.cn \
+  click==8.1.7 sexpdata==0.0.3
+```
+- 使用：
+```bash
+python3 -m src.cli.main attach \
+  --input path/to/lib.kicad_sym \
+  --property-name SzlcscCode
+```
+- 卸载（全局）：
+```bash
+python3 -m pip uninstall -y click sexpdata
+```
+
 ## 用法
 ```bash
 # 显式输出到新文件
