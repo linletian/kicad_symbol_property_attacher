@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 ### Docs
 - README (EN): Added Mainland China mirror note and a tip to disable build isolation during local install when SSL/cert blocks dependencies.
 - README (CN): Added corresponding mirror note and `--no-build-isolation` tip.
+- Git: `.gitignore` updated to exclude `tests/fixtures/` from VCS.
 
 ### Notes
 - Validation: Verified CLI via module run; CLI install/run validated after import fix.
